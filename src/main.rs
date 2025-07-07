@@ -92,11 +92,15 @@ fn download_audio(url: &str, audio_path: &str) {
 
 /// 调用 whisper_transcribe.py 进行语音转录
 fn convert_audio_to_text(audio_path: &str, json_path: &str) {
-    let status = Command::new("python3")
+    let python_cmd = if cfg!(target_os = "windows") { "python" } else { "python3" };
+
+    let output = Command::new(python_cmd)
         .args(["whisper_transcribe.py", audio_path, "--output", json_path])
-        .status()
+        .output()
         .expect("❌ 调用 Whisper 失败");
-    if !status.success() {
-        panic!("❌ Whisper 转录失败");
+
+    if !output.status.success() {
+        eprintln!("❌ Whisper 转录失败:\n{}", String::from_utf8_lossy(&output.stderr));
+        panic!();
     }
 }
