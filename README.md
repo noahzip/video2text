@@ -187,5 +187,6 @@ target/x86_64-pc-windows-gnu/release/video2text.exe
 2.copy whisper_transcribe.py 到当前目录下
 3.下载如下可执行文件到当前目录下：ffmpeg: ffmpeg.exe ffmrobe.exe 、yt-dlp.exe
 4.需要Python环境和pip配置
+5.pip install --upgrade openai-whisper torch yt-dlp
 5.powershell 执行命令 .\video2text.exe "bilibil/youtube视频链接"
 ```
